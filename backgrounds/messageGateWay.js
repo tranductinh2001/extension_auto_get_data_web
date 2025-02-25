@@ -8,5 +8,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendMessage("popupResponLog", message.content);
       break;
     }
+    case "continueScrapingMS": {
+      const { tabId, selector1, selector2, nextSelector } = message;
+      chrome.runtime.sendMessage(
+        {
+          action: "continueScraping",
+          tabId,
+          selector1,
+          selector2,
+          nextSelector,
+        },
+        (response) => {
+          sendResponse(response);
+        }
+      );
+      break;
+    }
   }
 });
